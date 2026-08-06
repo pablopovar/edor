@@ -1,0 +1,44 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.codex/
+*.kate-swp
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Runtime state
+data/runs/
+
+# Backups and temporary files
+*.PBAK.*
+*.bak
+*.bak.*
+*.orig
+backups/
+tmp/
+tmp.sh
+
+# Applied migration scripts
+cgpt-patch-*.sh
+cgpt-resume-*.sh
+
+# Raw development evidence; add selected documents later if useful
+development-notes/
+legacy-library.txt

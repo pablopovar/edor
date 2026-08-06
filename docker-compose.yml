@@ -1,0 +1,20 @@
+services:
+  edor-workbench:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edor-workbench
+    init: true
+    ports:
+      - "${EDOR_BIND_ADDRESS:-127.0.0.1}:${EDOR_PORT:-3300}:3300"
+      - "192.168.2.1:3300:3300"
+    environment:
+      EDOR_MODEL_BASE_URL: "http://host.docker.internal:11434/v1"
+      EDOR_MODEL_API_KEY: "ollama"
+      EDOR_MODEL_NAME: "qwen2.5:7b-instruct"
+    volumes:
+      - ./library:/app/library
+      - ./data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+#    restart: unless-stopped

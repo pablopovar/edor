@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EdOr Web</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>EdOr Web</h1>
+      <p>Python-orchestrated Role · Mode · Steps execution</p>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="EdOr Web sections">
+    <button
+      type="button"
+      class="tab-button active"
+      id="tab-button-edor"
+      role="tab"
+      aria-selected="true"
+      aria-controls="tab-edor"
+      data-tab="edor"
+    >EdOr</button>
+
+    <button
+      type="button"
+      class="tab-button"
+      id="tab-button-library"
+      role="tab"
+      aria-selected="false"
+      aria-controls="tab-library"
+      data-tab="library"
+    >Library</button>
+
+    <button
+      type="button"
+      class="tab-button"
+      id="tab-button-settings"
+      role="tab"
+      aria-selected="false"
+      aria-controls="tab-settings"
+      data-tab="settings"
+    >Settings</button>
+  </nav>
+
+  <main>
+    <section
+      class="tab-panel active"
+      id="tab-edor"
+      role="tabpanel"
+      aria-labelledby="tab-button-edor"
+    >
+      <section class="panel">
+        <details class="section-details" open>
+          <summary>Run Setup</summary>
+
+          <div class="details-body">
+            <div class="xml-upload-row">
+              <label>
+                Structured Input XML
+                <input
+                  id="structured-input-file"
+                  type="file"
+                  accept=".xml,text/xml,application/xml"
+                >
+              </label>
+
+              <div class="xml-upload-note">
+                Selecting a file loads the Structured Input. Review the setup, then run it when ready.
+              </div>
+
+              <div
+                id="xml-upload-status"
+                class="xml-upload-status"
+              ></div>
+            </div>
+
+            <div class="run-grid">
+              <label>
+                Loops
+                <input
+                  id="loops"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value="1"
+                >
+              </label>
+
+              <label>
+                Model
+                <select
+                  id="model"
+                  data-default-model="{{ default_model }}"
+                >
+                  <option value="{{ default_model }}">
+                    {{ default_model }}
+                  </option>
+                </select>
+              </label>
+
+              <label>
+                Role
+                <select id="role-select"></select>
+              </label>
+
+              <label>
+                Mode
+                <select id="mode-select"></select>
+              </label>
+            </div>
+
+            <div class="step-builder-block">
+              <div class="field-heading">Steps</div>
+
+              <div class="step-builder">
+                <select
+                  id="available-step-select"
+                  aria-label="Available Steps"
+                ></select>
+
+                <button type="button" id="add-step">
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="field-heading">Sequence</div>
+              <ol
+                id="selected-steps"
+                class="selected-steps"
+              ></ol>
+            </div>
+
+            <div class="actions setup-actions">
+              <button
+                type="button"
+                id="save-run-setup"
+              >
+                Save Run Setup
+              </button>
+
+              <span id="run-setup-status"></span>
+            </div>
+          </div>
+        </details>
+
+        <details class="section-details" open>
+          <summary>Contextual data</summary>
+
+          <div class="details-body">
+            <textarea
+              id="contextual-data"
+              rows="7"
+              aria-label="Contextual data"
+            ></textarea>
+          </div>
+        </details>
+
+        <details class="section-details" open>
+          <summary>Instructions definition</summary>
+
+          <div class="details-body">
+            <textarea
+              id="instructions-definition"
+              rows="7"
+              aria-label="Instructions definition"
+            ></textarea>
+          </div>
+        </details>
+
+        <details class="section-details" open>
+          <summary>Goals / success definition</summary>
+
+          <div class="details-body">
+            <textarea
+              id="goals-success-definition"
+              rows="7"
+              aria-label="Goals / success definition"
+            ></textarea>
+          </div>
+        </details>
+
+        <details class="section-details" open>
+          <summary>Payload</summary>
+
+          <div class="details-body">
+            <textarea
+              id="payload"
+              rows="16"
+              aria-label="Payload"
+            ></textarea>
+          </div>
+        </details>
+
+        <div class="actions run-actions">
+          <button
+            type="button"
+            id="run-sequence"
+            class="primary"
+          >
+            Run sequence
+          </button>
+
+          <span id="run-status"></span>
+        </div>
+      </section>
+
+      <section class="panel output-panel">
+        <details
+          class="section-details result-details"
+          open
+        >
+          <summary>Result</summary>
+
+          <div class="details-body">
+            <div
+              id="final-output"
+              class="output empty"
+            >
+              No run yet.
+            </div>
+          </div>
+        </details>
+
+        <details class="section-details trace-details">
+          <summary>Trace</summary>
+
+          <div class="details-body">
+            <div class="trace-toolbar">
+              <button
+                type="button"
+                id="copy-trace-transcript"
+              >
+                Copy Trace Transcript
+              </button>
+
+              <span id="trace-copy-status"></span>
+            </div>
+
+            <div id="step-trace"></div>
+          </div>
+        </details>
+      </section>
+    </section>
+
+    <section
+      class="tab-panel"
+      id="tab-library"
+      role="tabpanel"
+      aria-labelledby="tab-button-library"
+      hidden
+    >
+      <section class="panel library-editor">
+        <h2>Library Editor</h2>
+
+        <div class="editor-toolbar">
+          <label>
+            Bucket
+            <select id="editor-bucket">
+              <option value="roles">Roles</option>
+              <option value="modes">Modes</option>
+              <option value="steps">Steps</option>
+            </select>
+          </label>
+
+          <label>
+            Object
+            <select id="editor-object"></select>
+          </label>
+
+          <button type="button" id="new-object">
+            New
+          </button>
+        </div>
+
+        <div class="two-column">
+          <label>
+            Object ID
+            <input
+              id="editor-id"
+              placeholder="lowercase-stable-id"
+            >
+          </label>
+
+          <label>
+            Name
+            <input id="editor-name">
+          </label>
+        </div>
+
+        <label>
+          Description
+          <input id="editor-description">
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            id="editor-enabled"
+            checked
+          >
+          Enabled
+        </label>
+
+        <label>
+          Definition / execution logic
+          <textarea
+            id="editor-content"
+            rows="18"
+          ></textarea>
+        </label>
+
+        <div class="actions">
+          <button
+            type="button"
+            id="save-object"
+            class="primary"
+          >
+            Save object
+          </button>
+
+          <button
+            type="button"
+            id="delete-object"
+            class="danger"
+          >
+            Delete object
+          </button>
+
+          <span id="editor-status"></span>
+        </div>
+      </section>
+    </section>
+
+    <section
+      class="tab-panel"
+      id="tab-settings"
+      role="tabpanel"
+      aria-labelledby="tab-button-settings"
+      hidden
+    >
+      <section class="panel settings-panel">
+        <h2>Settings</h2>
+      </section>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
