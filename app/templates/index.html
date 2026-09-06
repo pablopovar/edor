@@ -53,8 +53,97 @@
       role="tabpanel"
       aria-labelledby="tab-button-edor"
     >
-      <section class="panel">
-        <details class="section-details" open>
+      <section class="panel workbench-panel">
+        <div class="workbench-grid">
+          <section class="editor-workspace" aria-label="EdOr input sections">
+            <nav class="editor-section-menu" aria-label="EdOr input sections">
+              <button type="button" data-editor-target="contextual-data">
+                What EdOr Should Know
+              </button>
+
+              <button type="button" data-editor-target="instructions-definition">
+                What EdOr Should Do
+              </button>
+
+              <button type="button" data-editor-target="goals-success-definition">
+                Desired Outcome and What Success Looks Like
+              </button>
+
+              <button
+                type="button"
+                class="active"
+                data-editor-target="payload"
+                aria-current="true"
+              >
+                Material EdOr Should Work With
+              </button>
+            </nav>
+
+            <div class="editor-panels">
+            <details class="section-details editor-field">
+              <summary>What EdOr Should Know</summary>
+
+              <div class="details-body">
+                <h2>What EdOr Should Know</h2>
+                <p data-edor-field-hint="true">Provide the background needed to understand the work.</p>
+                <textarea
+                  id="contextual-data"
+                  rows="7"
+                  aria-label="What EdOr Should Know"
+                  placeholder="Audience, circumstances, constraints, references, relevant facts…"
+                ></textarea>
+              </div>
+            </details>
+
+            <details class="section-details editor-field">
+              <summary>What EdOr Should Do</summary>
+
+              <div class="details-body">
+                <h2>What EdOr Should Do</h2>
+                <p data-edor-field-hint="true">Describe the work EdOr should perform.</p>
+                <textarea
+                  id="instructions-definition"
+                  rows="7"
+                  aria-label="What EdOr Should Do"
+                  placeholder="Create, revise, analyze, translate, extract, compare…"
+                ></textarea>
+              </div>
+            </details>
+
+            <details class="section-details editor-field">
+              <summary>Desired Outcome and What Success Looks Like</summary>
+
+              <div class="details-body">
+                <h2>Desired Outcome and What Success Looks Like</h2>
+                <p data-edor-field-hint="true">Explain what the work should accomplish and how a good result should be judged.</p>
+                <textarea
+                  id="goals-success-definition"
+                  rows="7"
+                  aria-label="Desired Outcome and What Success Looks Like"
+                  placeholder="Desired outcome:&#10;&#10;What success looks like:"
+                ></textarea>
+              </div>
+            </details>
+
+            <details class="section-details editor-field" open>
+              <summary>Material EdOr Should Work With</summary>
+
+              <div class="details-body">
+                <h2>Material EdOr Should Work With</h2>
+                <p data-edor-field-hint="true">Provide the source material for this run.</p>
+                <textarea
+                  id="payload"
+                  rows="16"
+                  aria-label="Material EdOr Should Work With"
+                  placeholder="Paste your notes, document, draft, transcript, data, or idea…"
+                ></textarea>
+              </div>
+            </details>
+            </div>
+          </section>
+
+          <aside class="setup-column">
+            <details class="section-details setup-details" open>
           <summary>Run Setup</summary>
 
           <div class="details-body">
@@ -147,104 +236,64 @@
               <span id="run-setup-status"></span>
             </div>
           </div>
-        </details>
-
-        <details class="section-details" open>
-          <summary>Contextual data</summary>
-
-          <div class="details-body">
-            <textarea
-              id="contextual-data"
-              rows="7"
-              aria-label="Contextual data"
-            ></textarea>
-          </div>
-        </details>
-
-        <details class="section-details" open>
-          <summary>Instructions definition</summary>
-
-          <div class="details-body">
-            <textarea
-              id="instructions-definition"
-              rows="7"
-              aria-label="Instructions definition"
-            ></textarea>
-          </div>
-        </details>
-
-        <details class="section-details" open>
-          <summary>Goals / success definition</summary>
-
-          <div class="details-body">
-            <textarea
-              id="goals-success-definition"
-              rows="7"
-              aria-label="Goals / success definition"
-            ></textarea>
-          </div>
-        </details>
-
-        <details class="section-details" open>
-          <summary>Payload</summary>
-
-          <div class="details-body">
-            <textarea
-              id="payload"
-              rows="16"
-              aria-label="Payload"
-            ></textarea>
-          </div>
-        </details>
-
-        <div class="actions run-actions">
-          <button
-            type="button"
-            id="run-sequence"
-            class="primary"
-          >
-            Run sequence
-          </button>
-
-          <span id="run-status"></span>
+            </details>
+          </aside>
         </div>
-      </section>
 
-      <section class="panel output-panel">
-        <details
-          class="section-details result-details"
-          open
-        >
-          <summary>Result</summary>
+        <div class="bottom-workspace">
+          <section class="run-column">
+            <h3 class="edor-run-it-title">Run It!</h3>
 
-          <div class="details-body">
-            <div
-              id="final-output"
-              class="output empty"
-            >
-              No run yet.
-            </div>
-          </div>
-        </details>
-
-        <details class="section-details trace-details">
-          <summary>Trace</summary>
-
-          <div class="details-body">
-            <div class="trace-toolbar">
+            <div class="actions run-actions">
               <button
                 type="button"
-                id="copy-trace-transcript"
+                id="run-sequence"
+                class="primary"
               >
-                Copy Trace Transcript
+                Run sequence
               </button>
 
-              <span id="trace-copy-status"></span>
+              <span id="run-status"></span>
             </div>
+          </section>
 
-            <div id="step-trace"></div>
-          </div>
-        </details>
+          <section class="panel output-panel">
+            <details
+              class="section-details result-details"
+              open
+            >
+              <summary>Result</summary>
+
+              <div class="details-body">
+                <div
+                  id="final-output"
+                  class="output empty"
+                >
+                  No run yet.
+                </div>
+              </div>
+            </details>
+
+            <details class="section-details trace-details">
+              <summary>Trace</summary>
+
+              <div class="details-body">
+                <div class="trace-toolbar">
+                  <button
+                    type="button"
+                    id="copy-trace-transcript"
+                  >
+                    Copy Trace Transcript
+                  </button>
+
+                  <span id="trace-copy-status"></span>
+                </div>
+
+                <div id="step-trace"></div>
+              </div>
+            </details>
+          </section>
+        </div>
       </section>
     </section>
 

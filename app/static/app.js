@@ -1555,6 +1555,57 @@ function renderTrace(steps) {
   }
 })();
 
+/* EDOR_EDITOR_SECTION_MENU_V1 */
+(() => {
+  const installEditorSectionMenu = () => {
+    const fields = [
+      ...document.querySelectorAll(".editor-workspace .editor-field"),
+    ];
+    const buttons = [
+      ...document.querySelectorAll(
+        ".editor-section-menu [data-editor-target]",
+      ),
+    ];
+
+    if (!fields.length || !buttons.length) {
+      return;
+    }
+
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        for (const candidate of fields) {
+          candidate.open = Boolean(
+            candidate.querySelector(
+              `#${button.dataset.editorTarget}`,
+            ),
+          );
+        }
+
+        for (const candidate of buttons) {
+          const active = candidate === button;
+          candidate.classList.toggle("active", active);
+
+          if (active) {
+            candidate.setAttribute("aria-current", "true");
+          } else {
+            candidate.removeAttribute("aria-current");
+          }
+        }
+      });
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      installEditorSectionMenu,
+      { once: true },
+    );
+  } else {
+    installEditorSectionMenu();
+  }
+})();
+
 function refreshEditorObjectSelect() {
   const bucket =
     byId("editor-bucket").value;
