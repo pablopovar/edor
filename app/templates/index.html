@@ -139,12 +139,31 @@
                 ></textarea>
               </div>
             </details>
+
+            <section class="run-column" aria-label="Run It!">
+              <h3 class="edor-run-it-title">Run It!</h3>
+
+              <div class="actions run-actions">
+                <button
+                  type="button"
+                  id="run-sequence"
+                  class="primary"
+                >
+                  Run sequence
+                </button>
+
+                <span id="run-status"></span>
+              </div>
+            </section>
             </div>
           </section>
 
           <aside class="setup-column">
             <details class="section-details setup-details" open>
-          <summary>Run Setup</summary>
+          <summary>
+            <span>Run Setup</span>
+            <span class="setup-toggle-label" aria-hidden="true">Collapse</span>
+          </summary>
 
           <div class="details-body">
             <div class="xml-upload-row">
@@ -241,22 +260,6 @@
         </div>
 
         <div class="bottom-workspace">
-          <section class="run-column">
-            <h3 class="edor-run-it-title">Run It!</h3>
-
-            <div class="actions run-actions">
-              <button
-                type="button"
-                id="run-sequence"
-                class="primary"
-              >
-                Run sequence
-              </button>
-
-              <span id="run-status"></span>
-            </div>
-          </section>
-
           <section class="panel output-panel">
             <details
               class="section-details result-details"

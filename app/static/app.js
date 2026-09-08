@@ -1606,6 +1606,64 @@ function renderTrace(steps) {
   }
 })();
 
+/* EDOR_EXPANDABLE_WORKSPACE_V1 */
+(() => {
+  const installExpandableWorkspace = () => {
+    const setup = document.querySelector(".setup-details");
+    const workbench = document.querySelector(".workbench-grid");
+    const setupLabel = setup?.querySelector(".setup-toggle-label");
+    const outputPanel = document.querySelector(".output-panel");
+    const result = outputPanel?.querySelector(".result-details");
+    const trace = outputPanel?.querySelector(".trace-details");
+
+    const refreshSetup = () => {
+      if (!setup || !workbench || !setupLabel) {
+        return;
+      }
+
+      const collapsed = !setup.open;
+      workbench.classList.toggle("setup-collapsed", collapsed);
+      setupLabel.textContent = collapsed ? "Expand" : "Collapse";
+    };
+
+    const refreshOutputs = () => {
+      if (!outputPanel || !result || !trace) {
+        return;
+      }
+
+      outputPanel.classList.toggle(
+        "result-only",
+        result.open && !trace.open,
+      );
+      outputPanel.classList.toggle(
+        "trace-only",
+        trace.open && !result.open,
+      );
+      outputPanel.classList.toggle(
+        "both-open",
+        result.open && trace.open,
+      );
+    };
+
+    setup?.addEventListener("toggle", refreshSetup);
+    result?.addEventListener("toggle", refreshOutputs);
+    trace?.addEventListener("toggle", refreshOutputs);
+
+    refreshSetup();
+    refreshOutputs();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      installExpandableWorkspace,
+      { once: true },
+    );
+  } else {
+    installExpandableWorkspace();
+  }
+})();
+
 function refreshEditorObjectSelect() {
   const bucket =
     byId("editor-bucket").value;
